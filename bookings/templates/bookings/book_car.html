@@ -1,0 +1,222 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Car | {{ car.name }}</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+        body {
+            background: linear-gradient(135deg, #f5f6f8, #e9ecef);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .booking-card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        #map {
+            height: 400px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            border: 1px solid #ddd;
+        }
+
+        .price-box {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #212529;
+        }
+
+        label {
+            font-weight: 600;
+        }
+
+        .btn-black {
+            background-color: #000;
+            color: #fff;
+            border-radius: 10px;
+            padding: 12px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-black:hover {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .btn-info {
+            border-radius: 10px;
+            padding: 12px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            box-shadow: none;
+            border: 1px solid #ccc;
+        }
+
+        .form-control:focus {
+            border-color: #000;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .alert {
+            border-radius: 10px;
+        }
+
+        .mb-3, .row.g-3 > div {
+            margin-bottom: 15px;
+        }    <
+            
+    </style>        
+</head>
+
+<body>
+
+<div class="container my-5">
+    <div class="booking-card">
+
+        <h2 class="fw-bold mb-2">🚗 Book Car: {{ car.name }}</h2>
+        <p class="text-muted mb-4">
+            Click on map to select pickup and drop locations
+        </p>
+
+        <!-- MAP -->
+        <div id="map"></div>
+
+        <!-- FORM -->
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                {{ form.start_location }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.end_location }}
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    {{ form.start_date }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.start_time }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.end_date }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.end_time }}
+                </div>
+            </div>
+
+            {{ form.total_km }}
+
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger mt-3">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+        
+{% if total_price %}
+    <h4>Total Price: ₹{{ total_price }}</h4>
+{% endif %}
+
+        <button type="submit" name="check_price" class="btn btn-info mt-3 w-100">Check Price</button>
+
+            <button class="btn btn-dark w-100 mt-4">
+                Confirm Booking
+            </button>
+        </form>
+
+        <!-- PRICE SUMMARY (DJANGO) -->
+        {% if price_summary %}
+        <div class="price-box mt-4">
+            <h5 class="fw-bold">💰 Price Summary</h5>
+            <p class="mb-1">Total Days: {{ price_summary.total_days }}</p>
+            <p class="mb-1">Distance: {{ price_summary.total_km }} km</p>
+            <p class="mb-1">Allowed Distance: {{ price_summary.total_days }} × 400 km</p>
+            <h4 class="fw-bold mt-2">
+                Total Price: ₹{{ price_summary.total_price }}
+            </h4>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+
+<!-- MAP SCRIPT -->
+<script>
+let map, startMarker, endMarker, routeLayer;
+
+// Init map
+map = L.map('map').setView([20.5937, 78.9629], 5);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap'
+}).addTo(map);
+
+// Map click logic
+map.on('click', function(e) {
+
+    if (!startMarker) {
+        startMarker = L.marker(e.latlng).addTo(map);
+        reverseGeocode(e.latlng, 'id_start_location');
+
+    } else if (!endMarker) {
+        endMarker = L.marker(e.latlng).addTo(map);
+        reverseGeocode(e.latlng, 'id_end_location');
+        calculateRoute();
+    }
+});
+
+// Reverse geocode
+function reverseGeocode(latlng, inputId) {
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latlng.lat}&lon=${latlng.lng}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById(inputId).value =
+                data.display_name || "Selected location";
+        });
+}
+
+// OSRM route + distance
+function calculateRoute() {
+    const s = startMarker.getLatLng();
+    const e = endMarker.getLatLng();
+
+    fetch(`https://router.project-osrm.org/route/v1/driving/${s.lng},${s.lat};${e.lng},${e.lat}?overview=full&geometries=geojson`)
+        .then(res => res.json())
+        .then(data => {
+            if (routeLayer) map.removeLayer(routeLayer);
+            routeLayer = L.geoJSON(data.routes[0].geometry).addTo(map);
+
+            const km = data.routes[0].distance / 1000;
+            document.getElementById("id_total_km").value = km.toFixed(2);
+        });
+}
+</script>
+
+</body>
+</html>

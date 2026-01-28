@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Home | Car Rental{% endblock %}
+
+{% block content %}
+
+<div class="text-center py-5">
+    <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="{% static 'image/slider.jpg' %}" class="d-block w-100" alt="...">
+                <!-- Caption overlay on first slide -->
+                <div class="carousel-caption d-none d-md-block">
+                    <h1 class="fw-bold">Rent Cars Easily 🚗</h1>
+                    <p class="lead mt-3">Choose from the best cars at affordable prices</p>
+                    <a href="/cars/" class="btn btn-dark btn-lg mt-3">Explore Our Cars</a>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <img src="{% static 'image/slider2.jpg' %}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1 class="fw-bold">Rent Cars Easily 🚗</h1>
+                    <p class="lead mt-3">Choose from the best cars at affordable prices</p>
+                    <a href="/cars/" class="btn btn-dark btn-lg mt-3">Explore Our Cars</a>
+                </div>
+            </div>
+
+            <div class="carousel-item">
+                <img src="{% static 'image/slider3.jpg' %}" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1 class="fw-bold">Rent Cars Easily 🚗</h1>
+                    <p class="lead mt-3">Choose from the best cars at affordable prices</p>
+                    <a href="/cars/" class="btn btn-dark btn-lg mt-3">Explore Our Cars</a>
+                </div>
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div> 
+
+<h2 class="text-center mb-5 fw-bold">Our Collections</h2>
+
+<div class="row g-4">
+
+    <!-- Car 1 -->
+    <div class="col-md-4">
+        <a href="/cars/" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'image/car4.jpg' %}" class="card-img-top" alt="MAYBACH S 500">
+                <div class="card-body text-center">
+                    <h5 class="card-title">MAYBACH S 500</h5>
+                    <p>₹4000.00 /day</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+
+    <!-- Car 2 -->
+    <div class="col-md-4">
+        <a href="/cars/" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'image/car3.jpg' %}" class="card-img-top" alt="Tata Nexon EV">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Tata Nexon EV</h5>
+                    <p>₹1,800/day</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Car 3 -->
+    <div class="col-md-4">
+        <a href="/cars/" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'image/car5.jpg' %}" class="card-img-top" alt="MERCEDES GL CLASS GL350 WHITE SUV">
+
+                <div class="card-body text-center">
+                    <h5 class="card-title">MERCEDES GL CLASS GL350 WHITE SUV
+</h5>
+                    <p>₹₹4000.00/day</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Car 4 -->
+    <div class="col-md-4">
+        <a href="/cars/" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'image/car14.jpg' %}" class="card-img-top" alt="BMW M5 KIT NEW SHAPE RED">
+                <div class="card-body text-center">
+                    <h5 class="card-title">BMW M5 KIT NEW SHAPE RED</h5>
+                    <p>₹3,200/day</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Car 5 -->
+    <div class="col-md-4">
+        <a href="/cars/" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'image/car10.jpg' %}" class="card-img-top" alt="Hyundai Ioniq 5">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Hyundai Ioniq 5</h5>
+                    <p>₹₹8000.00 /day</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- Car 6 -->
+    <div class="col-md-4">
+        <a href="/cars/" class="text-decoration-none text-dark">
+            <div class="card h-100 shadow-sm">
+                <img src="{% static 'image/car11.jpg' %}" class="card-img-top" alt="Tesla Model Y">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Tesla Model Y</h5>
+                    <p>₹10000.00/day</p>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+
+{% endblock %} 

@@ -1,0 +1,121 @@
+/* body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+        background: red !important;
+
+} */
+
+.login-bg {
+    height: 100vh;
+    background: url('/static/images/car-bg.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    width: 360px;
+    border-radius: 15px;
+}
+
+.input-group-text {
+    background: #f1f1f1;
+}
+@media (max-width: 576px) {
+    .login-card {
+        padding: 20px;
+    }
+
+    .login-card h4 {
+        font-size: 1.3rem;
+    }
+
+    .login-card h5 {
+        font-size: 1.1rem;
+    }
+
+    .login-card p {
+        font-size: 0.9rem;
+    }
+}
+.card h5 {
+    font-size: 1rem;
+}
+
+.card h3 {
+    font-size: 1.5rem;
+}
+/* body {
+    background-color: #f8f9fa;
+} */
+
+.card {
+    border-radius: 15px;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+}
+
+.carousel-inner img {
+    height: 400px; /* Set a fixed height */
+    object-fit: cover; /* Makes image cover the area without stretching */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    transition: 0.3s;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+.footer {
+    background-color:#000;
+    color: #ccc;
+}
+
+.footer-brand {
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.footer-title {
+    color: #fff;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.footer-text {
+    font-size: 14px;
+    color: #aaa;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.footer-line {
+    border-color: #222;
+    margin: 20px 0;
+}
+
+.footer-bottom {
+    font-size: 13px;
+    color: #777;
+}

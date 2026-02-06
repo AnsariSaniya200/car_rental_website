@@ -24,7 +24,7 @@ from datetime import datetime
 from django.utils import timezone
 from datetime import timedelta
 
-
+@login_required
 def book_car(request, car_id):
     car = get_object_or_404(Car, id=car_id)
     total_price = None  # Default to None
